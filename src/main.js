@@ -19,7 +19,7 @@ Vue.prototype.murl = 'https://m.market.cdbeki.com/'
 const store = new Vuex.Store({
   state: {
     token: util.getCookie('token') || '',
-    companyId: util.getCookie('companyId') || '',
+    // companyId: util.getCookie('companyId') || '',
     qiniutoken: util.getCookie('qiniutoken') || ''
   },
   mutations: {
@@ -58,14 +58,14 @@ axios.interceptors.response.use(
   response => {
     let res = {}
     let data = response.data
-    if (data.success === 1) {
-      res.error = false
+    if (data.code === 200) {
+      res.success = true
       res.result = data.result
-      res.msg = data.errorMessage
+      res.msg = data.message
     } else {
-      res.error = true
+      res.success = false
       res.result = data.result
-      res.msg = data.errorMessage
+      res.msg = data.message
       if (data.errorCode === 401) {
         // 登录过期
         store.state.token = ''
@@ -111,13 +111,12 @@ new Vue({
   }
 })
 
-/*
 router.beforeEach((to, from, next) => {
   // if (from.meta.requireAuth === true && to.fullPath.indexOf(from.fullPath) > -1) {
   //   to.meta.requireAuth = true
   // }
   if (to.meta.requireAuth === true) {
-    console.log(Boolean(store.state.token))
+    console.log(store.state.token)
     if (store.state.token) {
       next()
     } else {
@@ -130,4 +129,3 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
-*/

@@ -33,7 +33,7 @@ export default {
   mounted () {
   },
   created () {
-    this.http.get('/api/pubInfo/qiniu').then(res => {
+    this.http.get('/api/a/sys/common/getUploadToken').then(res => {
       if (res.error === false) {
         this.$store.state.qiniutoken = res.result.token
         this.util.setCookie('qiniutoken', res.result.token)

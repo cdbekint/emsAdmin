@@ -2,7 +2,7 @@
 <div class="login">
 <Row class="loginrow">
 
-<Col span="6" offset="16"> 
+<Col span="6" offset="16">
 <Form ref="formInline" class="loginmainpanel" :model="formInline" :rules="ruleInline">
         <Form-item>
         <h4>系统用户登录</h4>
@@ -33,7 +33,7 @@
 </Col>
 
 </Row>
- 
+
 </div>
 </template>
 
@@ -43,9 +43,8 @@ export default {
   data () {
     return {
       formInline: {
-        username: 'admin',
-        password: 'admin',
-        type: 2
+        username: '13678029799',
+        password: '123456'
       },
       register: {
         username: 'liming',
@@ -68,27 +67,16 @@ export default {
       this.$refs[name].validate((valid) => {
         if (valid) {
           const param = JSON.parse(JSON.stringify(this.formInline))
-          this.http.get('/api/account/login' + this.util.parseParam(param).replace('&', '?')).then(res => {
-            console.log(res)
-            if (res.error === false) {
+          this.http.post('/api/a/login' + this.util.parseParam(param).replace('&', '?')).then(res => {
+            console.log(Object.keys(res.result).length > 0)
+            if (Object.keys(res.result).length > 0) {
               if (res.result.access_token) {
                 this.$store.state.token = res.result.access_token
-                this.$store.state.companyId = res.result.user.company.id
+                this.util.setCookie('token', res.result.access_token)
               }
-              debugger
-              this.util.setCookie('token', res.result.access_token)
-              this.util.setCookie('companyId', res.result.user.company.id)
-              console.log(this.$router.query.redirect)
-              if (this.$router.query.redirect !== undefined) {
-                if (this.$router.query.redirect.indexOf('/login') > -1) {
-                  this.$router.push('/')
-                }
-                this.$router.push(this.$route.query.redirect)
-              } else {
-                this.$router.push('/')
-              }
+              this.router.push('/')
             } else {
-              this.$Message.error(res.msg)
+              this.$Message.error('登录失败，请重试')
             }
           }, res => {
             this.$Message.error('登录失败，请重试')
@@ -113,7 +101,7 @@ export default {
 
 <style scoped lang='stylus' rel="stylesheet/stylus">
 .loginrow
-  background:url(http://xdl.7192.com/static/img/banner_02.png) no-repeat top 
+  background:url(http://xdl.7192.com/static/img/banner_02.png) no-repeat top
   min-height:450px
 .loginmainpanel
   background:#fff

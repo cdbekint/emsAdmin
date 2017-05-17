@@ -1,10 +1,10 @@
 <template>
   <div class ="company">
-  <Form ref="formValidate" :model="company" :rules="ruleValidate" :label-width="80">
-    <Form-item label="姓名" prop="name">
+  <Form ref="formValidate" :model="company" :rules="ruleValidate" :label-width="100">
+    <Form-item label="公司名称" prop="name">
       <Input v-model="company.name" placeholder="请输入姓名"></Input>
     </Form-item>
-    <Form-item label="公司logo" class="text-left" prop="logoImg">
+    <Form-item label="公司logo" class="text-left" >
       <uploader :config="uploaderconfig"> </uploader>
       <input type="hidden" v-model="company.logoImg">
     </Form-item>
@@ -13,45 +13,42 @@
         <img :src="murl+company.logoImg" alt="" class="goodsimgthumb">
       </a>
     </Form-item>
-    <Form-item label="邮箱" prop="mail">
-      <Input v-model="company.mail" placeholder="请输入邮箱"></Input>
-    </Form-item>
-    <Form-item label="城市" prop="city">
-      <Select v-model="company.city" placeholder="请选择所在地">
-        <Option value="shenzhen">深圳市</Option>
+    <Form-item label="公司类型" prop="type">
+      <Select v-model="company.type" placeholder="请选择公司类型">
+        <Option value="1">集团</Option>
+        <Option value="2">子公司</Option>
       </Select>
     </Form-item>
-    <Form-item label="选择日期">
-      <Row>
-        <Col span="11">
-        <Form-item prop="date">
-          <Date-picker type="date" placeholder="选择日期" v-model="company.date"></Date-picker>
-        </Form-item>
-        </Col>
-        <Col span="2" style="text-align: center">-</Col>
-        <Col span="11">
-        <Form-item prop="time">
-          <Time-picker type="time" placeholder="选择时间" v-model="company.time"></Time-picker>
-        </Form-item>
-        </Col>
-      </Row>
+    <Form-item label="公司区域" prop="areaId">
+      <Select v-model="company.areaId" placeholder="请选择所在地">
+        <Option v-for = "area in areas" :value="area.id" :key = "area">{{area.name}}</Option>
+      </Select>
     </Form-item>
-    <Form-item label="性别" prop="gender">
-      <Radio-group v-model="company.gender">
-        <Radio label="male">男</Radio>
-        <Radio label="female">女</Radio>
-      </Radio-group>
+    <Form-item label="具体地址" prop="address">
+      <Input v-model="company.address"></Input>
     </Form-item>
-    <Form-item label="爱好" prop="interest">
-      <Checkbox-group v-model="company.interest">
-        <Checkbox label="吃饭"></Checkbox>
-        <Checkbox label="睡觉"></Checkbox>
-        <Checkbox label="跑步"></Checkbox>
-        <Checkbox label="看电影"></Checkbox>
-      </Checkbox-group>
+    <Form-item label="管理员用户名" prop="username">
+      <Input v-model="company.username"></Input>
     </Form-item>
-    <Form-item label="介绍" prop="desc">
-      <Input v-model="company.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入..."></Input>
+    <Form-item label="管理员密码" prop="password">
+      <Input v-model="company.password"></Input>
+    </Form-item>
+    <Form-item label="联系方式" prop="phone">
+      <Input v-model="company.phone"></Input>
+    </Form-item>
+    <Form-item label="邮箱" prop="email">
+      <Input v-model="company.email"></Input>
+    </Form-item>
+    <Form-item label="初始化设置" prop="modelCid">
+      <Select v-model="company.modelCid" placeholder="请选择所在地">
+        <Option v-for = "area in areas" :value="area.id">{{area.name}}</Option>
+      </Select>
+    </Form-item>
+    <Form-item label="公司口号" >
+      <Input v-model="company.slogan"></Input>
+    </Form-item>
+    <Form-item label="传真" >
+      <Input v-model="company.fax"></Input>
     </Form-item>
     <Form-item>
       <Button type="primary" @click="handleSubmit('company')">提交</Button>
@@ -61,12 +58,13 @@
   </div>
 </template>
 <script>
+  import uploader from '../Util/Uploader'
   export default {
     data () {
       return {
         company: {
           name: '',
-          parentId: '',
+          parentId: '0',
           areaId: '',
           type: '',
           address: '',
@@ -79,50 +77,105 @@
           modelCid: '',
           slogan: ''
         },
+        areas: [
+        ],
         ruleValidate: {
           name: [
             { required: true, message: '姓名不能为空', trigger: 'blur' }
           ],
-          parentId: [
-            { required: true, message: '没有则为0', trigger: 'blur' },
+          phone: [
+            { required: true, message: '联系方式不能为空', trigger: 'blur' }
           ],
+/*          logoImg: [
+            { required: true, message: 'logo不能为空', trigger: 'change' }
+          ],
+          */
           areaId: [
-            { required: true, message: '', trigger: 'change' }
+            { required: true, message: '选择地区', trigger: 'change' }
           ],
           type: [
-            { required: true, message: '请选择性别', trigger: 'change' }
+            { required: true, message: '选择类型', trigger: 'change' }
           ],
           address: [
-            { required: true, type: 'array', message: '至少选择一个爱好', trigger: 'change' },
+            { required: true, message: '输入具体地区', trigger: 'blur' }
           ],
-          logoImg: [
-            { required: true, type: 'date', message: '请选择日期', trigger: 'change' }
+          username: [
+            { required: true, message: '输入管理员用户名', trigger: 'blur' }
           ],
-          phone: [
-            { required: true, type: 'date', message: '请选择时间', trigger: 'change' }
+          password: [
+            { required: true, message: '输入管理员密码', trigger: 'blur' }
+          ],
+          modelCid: [
+            { required: true, message: '选择初始化模板', trigger: 'change' }
+          ],
+          email: [
+            { required: true, message: '邮箱不能为空', trigger: 'blur' },
+            { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
           ]
         },
         uploaderconfig: {
           maxSize: 5120,
           format: ['jpg', 'png', 'jpeg'],
           showUploadList: false,
-          parent: 'Goods',
-          child: 'goodsImg'
+          parent: 'company',
+          child: 'logoImg'
         }
       }
     },
+    components: { uploader },
+    created () {
+      this.getArea(1);
+    },
     methods: {
-      handleSubmit (name) {
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-            this.$Message.success('提交成功!');
-          } else {
-            this.$Message.error('表单验证失败!');
-          }
-        })
+      handleSubmit () {
+        var ai = JSON.parse(JSON.stringify(this.company))
+        console.log(ai)
+        if (!ai.name) {
+          this.$Notice.info({title: '请完善信息', desc: '请填写活动名称'})
+          return false
+        }
+        if (!ai.areaId) {
+          this.$Notice.info({title: '请完善信息', desc: '请填写活动分享介绍'})
+          return false
+        }
+        if (!ai.type) {
+          this.$Notice.info({title: '请完善信息', desc: '请上传分享缩略图'})
+          return false
+        }
+        if (!ai.address) {
+          this.$Notice.info({title: '请完善信息', desc: '请上传活动大图'})
+          return false
+        }
+        if (!ai.phone) {
+          this.$Notice.info({title: '请完善信息', desc: '请选择活动开始时间'})
+          return false
+        }
+        if (!ai.username) {
+          this.$Notice.info({title: '请完善信息', desc: '请选择活动结束时间'})
+          return false
+        }
+        if (!ai.password) {
+          this.$Notice.info({title: '请完善信息', desc: '请选择分享礼品'})
+          return false
+        }
+        if (!ai.modelCid) {
+          this.$Notice.info({title: '请完善信息', desc: '请输入活动定金'})
+          return false
+        }
+        this.http.post('/api/a/sys/company/save', this.company).then((res) => {
+          console.log(res)
+        });
       },
       handleReset (name) {
         this.$refs[name].resetFields();
+      },
+      getArea (p) {
+        this.http.get('/api/a/sys/area/list?pageNo=' + p).then((res) => {
+          if (res.result.count > 0) {
+            this.areas = res.result.list;
+            console.log(this.areas)
+          }
+        });
       }
     }
   }
@@ -131,4 +184,5 @@
 <style lang="stylus" rel="stylesheet/stylus">
   .company
     margin-top 20px
+    width 70%
 </style>

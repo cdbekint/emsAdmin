@@ -1,21 +1,21 @@
 <template>
   <div id="app">
     <vheader class="header-wrapper" :userInfo="userInfo"></vheader>
-    <div class="layout">
+    <div class="layout" v-if = "$store.state.token">
       <div class="layout-content">
         <Row>
           <i-col span="5">
-            <Menu active-name="1-2" width="auto" :open-names="['1']">
+            <Menu active-name="1-1" width="auto" :open-names="['1']">
               <Submenu name="1">
                 <template slot="title">
                   <Icon type="ios-navigate"></Icon>
                   账户系统
                 </template>
                 <Menu-item name="1-1">
-                  <router-link to="/companyAdd" tag = "div">新增公司</router-link>
+                  <router-link to="/companyList" tag = "div">公司列表</router-link>
                 </Menu-item>
                 <Menu-item name="1-2">
-                  <router-link to="/companyList" tag = "div">公司列表</router-link>
+                  <router-link to="/companyAdd" tag = "div">新增公司</router-link>
                 </Menu-item>
                 <Menu-item name="1-3">
                   <router-link to="/companyInfo" tag = "div">公司信息</router-link>
@@ -48,16 +48,13 @@
                   运营监控
                 </template>
                 <Menu-item name="3-1">
-                  <router-link to="/companyAdd" tag = "div">新增公司</router-link>
+                  <router-link to="/systemLog" tag = "div">系统日志列表</router-link>
                 </Menu-item>
                 <Menu-item name="3-2">
-                  <router-link to="/companyList" tag = "div">公司列表</router-link>
+                  <router-link to="/mobileLog" tag = "div">移动端日志列表</router-link>
                 </Menu-item>
                 <Menu-item name="3-3">
-                  <router-link to="/companyInfo" tag = "div">公司信息</router-link>
-                </Menu-item>
-                <Menu-item name="3-4">
-                  <router-link to="/systemInfo" tag = "div">系统用户查看</router-link>
+                  <router-link to="/android" tag = "div">安卓版本管理</router-link>
                 </Menu-item>
               </Submenu>
               <Submenu name="3">
@@ -66,16 +63,13 @@
                   系统配置
                 </template>
                 <Menu-item name="4-1">
-                  <router-link to="/companyAdd" tag = "div">新增公司</router-link>
+                  <router-link to="/menuGroupList" tag = "div">菜单分组管理</router-link>
                 </Menu-item>
                 <Menu-item name="4-2">
-                  <router-link to="/companyList" tag = "div">公司列表</router-link>
+                  <router-link to="/menuList" tag = "div">菜单设置</router-link>
                 </Menu-item>
                 <Menu-item name="4-3">
-                  <router-link to="/companyInfo" tag = "div">公司信息</router-link>
-                </Menu-item>
-                <Menu-item name="4-4">
-                  <router-link to="/systemInfo" tag = "div">系统用户查看</router-link>
+                  <router-link to="/page" tag = "div">推广页面设置</router-link>
                 </Menu-item>
               </Submenu>
             </Menu>
@@ -85,9 +79,12 @@
           </i-col>
         </Row>
       </div>
-      <div class="layout-copy">
-        2011-2016 &copy; TalkingData
-      </div>
+    </div>
+
+    <div v-else>
+      <login>
+
+      </login>
     </div>
     <vfooter></vfooter>
   </div>
@@ -95,6 +92,7 @@
 
 <script  type="text/ecmascript-6">
   import vheader from '@/components/Main/Header'
+  import login from './Login.vue'
   import vfooter from '@/components/Main/Footer'
   export default {
     name: 'admin',
@@ -111,7 +109,7 @@
         }
       }
     },
-    components: { vheader, vfooter },
+    components: { vheader, login, vfooter },
     methods: {
     },
     created () {
