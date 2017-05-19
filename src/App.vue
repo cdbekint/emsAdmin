@@ -21,7 +21,7 @@
                   <router-link to="/companyInfo" tag = "div">公司信息</router-link>
                 </Menu-item>
                 <Menu-item name="1-4">
-                  <router-link to="/systemInfo" tag = "div">系统用户查看</router-link>
+                  <router-link to="/staffList" tag = "div">系统用户查看</router-link>
                 </Menu-item>
               </Submenu>
               <Submenu name="2">
@@ -125,6 +125,10 @@
   html,
   body
     background:#E7E8EB !important
+  .ivu-menu
+    .ivu-menu-item
+      div
+        padding 8px
 
   #app
     font-family: 'Avenir', Helvetica, Arial, sans-serif

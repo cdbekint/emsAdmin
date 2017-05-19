@@ -10,7 +10,7 @@
     </Form-item>
     <Form-item label="图片预览">
       <a :href="murl + company.logoImg" target="_blank" v-if="company.logoImg">
-        <img :src="murl+company.logoImg" alt="" class="goodsimgthumb">
+        <img :src="murl+company.logoImg" alt="" class="goodsimgthumb" style = "width:125px;height:125px;">
       </a>
     </Form-item>
     <Form-item label="公司类型" prop="type">
@@ -40,9 +40,10 @@
       <Input v-model="company.email"></Input>
     </Form-item>
     <Form-item label="初始化设置" prop="modelCid">
-      <Select v-model="company.modelCid" placeholder="请选择所在地">
+<!--      <Select v-model="company.modelCid" placeholder="请选择所在地">
         <Option v-for = "area in areas" :value="area.id">{{area.name}}</Option>
-      </Select>
+      </Select>-->
+      <Input v-model="company.modelCid"></Input>
     </Form-item>
     <Form-item label="公司口号" >
       <Input v-model="company.slogan"></Input>
@@ -71,7 +72,7 @@
           logoImg: '',
           phone: '',
           username: '',
-          password: [],
+          password: '',
           fax: '',
           email: '',
           modelCid: '',
@@ -86,10 +87,9 @@
           phone: [
             { required: true, message: '联系方式不能为空', trigger: 'blur' }
           ],
-/*          logoImg: [
+          logoImg: [
             { required: true, message: 'logo不能为空', trigger: 'change' }
           ],
-          */
           areaId: [
             { required: true, message: '选择地区', trigger: 'change' }
           ],
@@ -163,7 +163,9 @@
           return false
         }
         this.http.post('/api/a/sys/company/save', this.company).then((res) => {
-          console.log(res)
+          if (res.success === true) {
+            this.$Message.success('新增成功')
+          }
         });
       },
       handleReset (name) {
@@ -171,7 +173,8 @@
       },
       getArea (p) {
         this.http.get('/api/a/sys/area/list?pageNo=' + p).then((res) => {
-          if (res.result.count > 0) {
+//          this.http.get('http://192.168.1.17:8080/a/sys/area/list?pageNo=' + p).then((res) => {
+          if (res.success === true) {
             this.areas = res.result.list;
             console.log(this.areas)
           }

@@ -2,9 +2,9 @@
   <div class="companyList">
     <div class="content-title">
       <div class="titlename" style="overflow: hidden">
-        <Button type="info" style="float: right;margin-right:30px;">
+          <Tag color="blue" style="float: right;margin-right:30px;width:100px;height:30px;font-size:1.0em;line-height: 30px;">
           <router-link to="/android" tag = "span">查看最新版本</router-link>
-        </Button>
+        </Tag>
       </div>
     </div>
     <div class="content">
@@ -21,6 +21,10 @@
         <Form-item label="下载地址" prop="versionUrl">
           <Input v-model="android.versionUrl" placeholder="请输入"></Input>
         </Form-item>
+        <Form-item label="下载包" class="text-left" >
+          <uploader :config="uploaderconfig"></uploader>
+          <Input v-model="android.packgeSize"></Input>
+        </Form-item>
 
         <Form-item>
           <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
@@ -32,51 +36,49 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import uploader from '../Util/Uploader'
   export default {
     name: 'androidUpdate',
+    components: { uploader },
     data () {
       return {
         android: {
-          versionCode: 0,
+          versionCode: '',
           versionName: '',
           versionDesc: '',
           versionUrl: '',
-          packgeSize: ''
+          packgeSize: 0
         },
         Rule: {
-          versionCode: [
-            {required: true, message: '商品名称不能为空', trigger: 'blur'}
-          ],
           versionName: [
-            {required: true, message: '商品名称不能为空', trigger: 'blur'}
+            {required: true, message: '版本名称不能为空', trigger: 'blur'}
           ],
           versionDesc: [
-            {required: true, message: '商品名称不能为空', trigger: 'blur'}
+            {required: true, message: '版本描述不能为空', trigger: 'blur'}
           ],
           versionUrl: [
-            {required: true, message: '商品名称不能为空', trigger: 'blur'}
-          ],
-          versionSize: [
-            {required: true, message: '图片必须上传'}
+            {required: true, message: '下载地址不能为空', trigger: 'blur'}
           ]
         },
         uploaderconfig: {
           maxSize: 5120,
-          format: ['jdk'],
+          format: ['jpg'],
           showUploadList: false,
           parent: 'android',
-          child: 'packgeSize'
+          size: 'packgeSize'
         }
       }
     },
     methods: {
       handleSubmit (name) {
+        var result = JSON.parse(JSON.stringify(this.android));
+        result['versionCode'] = ~~(result['versionCode']);
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.http.post('/api/gift', this.android).then(res => {
-              if (res.error === false) {
+            this.http.post('/api/a/base/baseVersion/save', result).then(res => {
+              if (res.success === true) {
                 this.$Message.success('保存成功')
-                this.router.push('/gift')
+                this.router.push('/android')
               }
             })
           } else {

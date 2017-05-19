@@ -67,9 +67,8 @@ export default {
       this.$refs[name].validate((valid) => {
         if (valid) {
           const param = JSON.parse(JSON.stringify(this.formInline))
-          this.http.post('/api/a/login' + this.util.parseParam(param).replace('&', '?')).then(res => {
-            console.log(Object.keys(res.result).length > 0)
-            if (Object.keys(res.result).length > 0) {
+          this.http.post('/api/a/11login' + this.util.parseParam(param).replace('&', '?')).then(res => {
+            if (res.success === true) {
               if (res.result.access_token) {
                 this.$store.state.token = res.result.access_token
                 this.util.setCookie('token', res.result.access_token)

@@ -34,7 +34,7 @@ export default {
   },
   created () {
     this.http.get('/api/a/sys/common/getUploadToken').then(res => {
-      if (res.error === false) {
+      if (res.success === true) {
         this.$store.state.qiniutoken = res.result.token
         this.util.setCookie('qiniutoken', res.result.token)
       }
@@ -46,13 +46,18 @@ export default {
     },
     uploadSuccess (res, file) {
       this.item.showProgress = false
-      if (this.config.parent !== undefined && this.config.child !== undefined) {
-        var _this = this
+      if (this.config.parent !== undefined) {
+        var _this = this;
         for (var i = 0; i < 100; i++) {
           if (_this[this.config.parent] === undefined) {
             _this = _this.$parent
           } else {
-            _this[this.config.parent][this.config.child] = res.key
+            if (this.config.child !== void 0) {
+              _this[this.config.parent][this.config.child] = res.key
+            }
+            if (this.config.size !== void 0) {
+              _this[this.config.parent][this.config.size] = file.size
+            }
             break
           }
         }

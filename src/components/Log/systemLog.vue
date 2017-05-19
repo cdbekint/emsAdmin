@@ -2,8 +2,7 @@
   <div class="companyList">
     <div class="content-title">
       <div class="titlename">
-        <Input style="width:60%;margin:auto;" placeholder="请输入查询公司名称">
-        <Button slot="append" icon="ios-search"></Button>
+        <Input style="width:60%;margin:auto;" v-model = "searchVal" placeholder="请输入接口地址" >
         </Input>
       </div>
     </div>
@@ -11,7 +10,7 @@
       <Table border :columns="companyCol" :data="companyData" class="giftlistable"></Table>
       <div style="margin: 10px;overflow: hidden">
         <div style="float: right;">
-          <Page :total="pager.totalPage" :current="pager.pageNo" @on-change="changePage"></Page>
+          <Page :total="pager.totalPage" :current="pager.pageNo" @on-change="changePage($event)"></Page>
         </div>
       </div>
     </div>
@@ -56,6 +55,8 @@
           }
         ],
         companyData: [],
+        datas: [],
+        searchVal: '',
         pager: {
           totalPage: 1,
           pageNo: 1
@@ -67,15 +68,28 @@
     },
     methods: {
       getList (pageNo) {
-        this.http.get('/api/a/sys/log/list?page=' + pageNo || 1).then(res => {
-          if (res.result.count > 0) {
-            this.pager = res.result
-            this.companyData = res.result.list
+        this.http.get('/api/a/sys/log/list?pageNo=' + pageNo || 1).then(res => {
+          if (res.success === true) {
+            this.pager.totalPage = res.result.totalPage
+            this.pager.pageNo = res.result.pageNo
+            this.datas = res.result.list;
+            this.companyData = this.datas;
           }
         })
       },
-      changePage () {
-        this.getList(this.pager.pageNo)
+      changePage (e) {
+        this.getList(e)
+      }
+    },
+    watch: {
+      searchVal: function (nval, oval) {
+        if (this.util.isNull(nval) === false) {
+          this.companyData = this.companyData.filter(function (item) {
+            return item.requestUri.indexOf(nval) !== -1;
+          })
+        } else {
+          this.companyData = this.datas;
+        }
       }
     }
   }

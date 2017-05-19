@@ -26,6 +26,10 @@
             align: 'center'
           },
           {
+            title: '用户',
+            key: 'phoneNum'
+          },
+          {
             title: '请求时间',
             key: 'startDate'
           },

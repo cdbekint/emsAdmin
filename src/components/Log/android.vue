@@ -2,9 +2,9 @@
   <div class="companyList">
     <div class="content-title">
       <div class="titlename" style="overflow: hidden">
-        <Button type="info" style="float: right;margin-right:30px;">
+        <Tag color="blue" style="float: right;margin-right:30px;width:100px;height:30px;font-size:1.0em;line-height: 30px;">
           <router-link to="/androidUpdate" tag = "span">更新版本</router-link>
-        </Button>
+        </Tag>>
       </div>
     </div>
     <div class="content">
@@ -57,12 +57,12 @@
       }
     },
     created () {
-      this.getList(1)
+      this.getList()
     },
     methods: {
-      getList (pageNo) {
+      getList () {
         this.http.get('/api/a/base/baseVersion/findLatest').then(res => {
-          if (Object.keys(res.result).length > 0) {
+          if (res.success === true) {
             this.companyData.push(res.result)
           }
         })

@@ -2,9 +2,9 @@
   <div class="companyList">
     <div class="content-title">
       <div class="titlename" style="overflow: hidden">
-        <Button type="info" style="float: right;margin-right:30px;">
-          <router-link to="/menuGroupList" tag = "span">菜单列表</router-link>
-        </Button>
+        <Tag color="blue" style="float: right;margin-right:30px;width:100px;height:30px;font-size:1.0em;line-height: 30px;">
+          <router-link to="/menuList" tag = "span">菜单列表</router-link>
+        </Tag>
       </div>
     </div>
     <div class="content" style = "width:70%;">
@@ -13,25 +13,10 @@
           <Input v-model="menuGroup.name" placeholder="请输入"></Input>
         </Form-item>
 
-        <Form-item label="链接" prop="href">
-          <Input v-model="menuGroup.href" placeholder="请输入"></Input>
-        </Form-item>
         <Form-item label="权限标记" prop="permission">
           <Input v-model="menuGroup.permission" placeholder="请输入"></Input>
         </Form-item>
-        <Form-item label="打开目标">
-          <Input v-model="menuGroup.target" placeholder="请输入"></Input>
-        </Form-item>
 
-        <Form-item label="图标" class="text-left" >
-          <uploader :config="uploaderconfig"> </uploader>
-          <input type="hidden" v-model="menuGroup.icon">
-        </Form-item>
-        <Form-item label="图片预览">
-          <a :href="murl + menuGroup.icon" target="_blank" v-if="menuGroup.icon">
-            <img :src="murl+menuGroup.icon" alt="" class="goodsimgthumb">
-          </a>
-        </Form-item>
         <Form-item label="是否显示" prop="isShow">
           <Select v-model="menuGroup.isShow" placeholder="请选择">
             <Option value="0">不显示</Option>
@@ -40,7 +25,7 @@
         </Form-item>
         <Form-item label="分组" prop="groupId">
           <Select v-model="menuGroup.groupId" placeholder="请选择">
-            <Option value="0">不显示</Option>
+            <Option v-for="item in groupList" :value="item.id">{{item.name}}</Option>
           </Select>
         </Form-item>
         <Form-item>
@@ -53,41 +38,38 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import uploader from '../Util/Uploader'
   export default {
     name: 'menuGroupAdd',
-    components: { uploader },
     data () {
       return {
         menuGroup: {
           name: '',
           parentId: '',
-          href: '',
           permission: '',
-          target: '',
-          icon: '',
           isShow: 0,
           groupId: '',
           sort: 0
         },
+        groupList: [],
         Rule: {
           name: [
             {required: true, message: '名称不能为空', trigger: 'blur'}
           ]
-        },
-        uploaderconfig: {
-          maxSize: 5120,
-          format: ['jpg', 'png', 'jpeg'],
-          showUploadList: false,
-          parent: 'menuGroup',
-          child: 'icon'
         }
       }
+    },
+    created () {
+      this.http.get('/api/a/sys/menuGroup/list').then(res => {
+        if (res.success === true) {
+          this.groupList = res.result;
+        }
+      })
     },
     methods: {
       handleSubmit (name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
+            console.log(this.menuGroup)
             this.http.post('/api/a/sys/menu/save', this.menuGroup).then(res => {
               if (res.success === true) {
                 this.$Message.success('保存成功')

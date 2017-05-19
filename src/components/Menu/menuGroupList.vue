@@ -2,9 +2,9 @@
   <div class="companyList">
     <div class="content-title">
       <div class="titlename" style="overflow: hidden">
-        <Button type="info" style="float: right;margin-right:30px;">
-          <router-link to="/menuGroupAdd" tag = "span">添加分组</router-link>
-        </Button>
+        <Tag color="blue" style="float: right;margin-right:30px;width:100px;height:30px;font-size:1.0em;line-height: 30px;">
+          <router-link to="/menuGroupAdd">添加菜单分组</router-link>
+        </Tag>
       </div>
     </div>
     <div class="content">
@@ -56,7 +56,7 @@
         this.router.push({path: '/menuGroupEdit', query: {id: id}});
       },
       del (id) {
-        this.http.delete('/api/a/sys/menuGroup/delete', {id: id}).then(res => {
+        this.http.post('/api/a/sys/menuGroup/delete', {id: id}).then(res => {
           if (res.success === true) {
             this.$Message.success('删除成功');
             this.getList(1);

@@ -7,6 +7,7 @@ import Home from '@/components/Main/Home'
 import login from '@/Login.vue'
 import companyAdd from '@/components/System/companyAdd'
 import companyList from '@/components/System/companyList'
+import staffList from '@/components/System/staffList'
 
 import systemLog from '@/components/Log/systemLog'
 import mobileLog from '@/components/Log/mobileLog'
@@ -38,7 +39,15 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home,
-      redirect: '/companyList',
+      // redirect: '/companyList',
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/staffList',
+      name: 'staffList',
+      component: staffList,
       meta: {
         requireAuth: true
       }

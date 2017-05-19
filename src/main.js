@@ -13,7 +13,7 @@ Vue.use(Vuex)
 Vue.prototype.http = axios
 Vue.prototype.router = router
 Vue.prototype.util = util
-Vue.prototype.murl = 'https://m.market.cdbeki.com/'
+Vue.prototype.murl = '//m.ems.cdbeki.com/'
 
 /* eslint-disable no-new */
 const store = new Vuex.Store({
@@ -33,6 +33,7 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 
 axios.interceptors.request.use(function (config) {
+  debugger
   if (config.data) {
     config.data.access_token = store.state.token
   } else {
@@ -58,6 +59,7 @@ axios.interceptors.response.use(
   response => {
     let res = {}
     let data = response.data
+    debugger
     if (data.code === 200) {
       res.success = true
       res.result = data.result

@@ -2,9 +2,9 @@
   <div class="companyList">
     <div class="content-title">
       <div class="titlename" style="overflow: hidden">
-        <Button type="info" style="float: right;margin-right:30px;">
+        <Tag color="blue" style="float: right;margin-right:30px;width:100px;height:30px;font-size:1.0em;line-height: 30px;">
           <router-link to="/menuGroupList" tag = "span">菜单分组列表</router-link>
-        </Button>
+        </Tag>
       </div>
     </div>
     <div class="content" style = "width:70%;">
