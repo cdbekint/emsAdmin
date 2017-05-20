@@ -8,7 +8,9 @@
       </div>
     </div>
     <div class="content">
-      <Form ref="formValidate" :model="android" class="gifteditform" :rules="Rule" :label-width="100">
+    <Row>
+      <Col span="12">
+        <Form ref="formValidate" :model="android" class="gifteditform" :rules="Rule" :label-width="100">
         <Form-item label="版本号" prop="versionCode">
           <Input v-model="android.versionCode" placeholder="请输入"></Input>
         </Form-item>
@@ -16,14 +18,14 @@
           <Input v-model="android.versionName" placeholder="请输入"></Input>
         </Form-item>
         <Form-item label="版本描述" prop="versionDesc">
-          <Input v-model="android.versionDesc" placeholder="请输入"></Input>
+          <Input v-model="android.versionDesc" type="textarea" :autosize="{minRows: 3,maxRows: 10}" placeholder="请输入"></Input>
         </Form-item>
         <Form-item label="下载地址" prop="versionUrl">
           <Input v-model="android.versionUrl" placeholder="请输入"></Input>
         </Form-item>
         <Form-item label="下载包" class="text-left" >
           <uploader :config="uploaderconfig"></uploader>
-          <Input v-model="android.packgeSize"></Input>
+          <Input v-model="android.packgeSize" v-show="false"></Input>
         </Form-item>
 
         <Form-item>
@@ -31,6 +33,10 @@
           <Button type="ghost" style="margin-left: 8px" @click="handleReset('formValidate')">取消</Button>
         </Form-item>
       </Form>
+
+      </Col>
+    </Row>
+      
     </div>
   </div>
 </template>
@@ -62,7 +68,7 @@
         },
         uploaderconfig: {
           maxSize: 5120,
-          format: ['jpg'],
+          format: ['apk'],
           showUploadList: false,
           parent: 'android',
           size: 'packgeSize'
