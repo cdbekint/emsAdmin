@@ -20,13 +20,14 @@
         <Form-item label="版本描述" prop="versionDesc">
           <Input v-model="android.versionDesc" type="textarea" :autosize="{minRows: 3,maxRows: 10}" placeholder="请输入"></Input>
         </Form-item>
-        <Form-item label="下载地址" prop="versionUrl">
-          <Input v-model="android.versionUrl" placeholder="请输入"></Input>
-        </Form-item>
-        <Form-item label="下载包" class="text-left" >
+         <Form-item label="下载包" class="text-left" >
           <uploader :config="uploaderconfig"></uploader>
-          <Input v-model="android.packgeSize" v-show="false"></Input>
+          <Input v-model="android.packgeSize" readonly v-show="android.packgeSize>0"></Input>
         </Form-item>
+        <Form-item label="下载地址" prop="versionUrl" v-show="android.versionUrl">
+          <Input v-model="android.versionUrl" readonly></Input>
+        </Form-item>
+       
 
         <Form-item>
           <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
@@ -67,10 +68,11 @@
           ]
         },
         uploaderconfig: {
-          maxSize: 5120,
+          maxSize: 51200,
           format: ['apk'],
           showUploadList: false,
           parent: 'android',
+          child: 'versionUrl',
           size: 'packgeSize'
         }
       }
@@ -79,8 +81,10 @@
       handleSubmit (name) {
         var result = JSON.parse(JSON.stringify(this.android));
         result['versionCode'] = ~~(result['versionCode']);
+        // var _this = this;
         this.$refs[name].validate((valid) => {
           if (valid) {
+            // result.versionUrl = (_this.murl.indexOf('http') > 0) ? _this.murl : ('https:' + _this.murl) + result.versionUrl;
             this.http.post('/api/a/base/baseVersion/save', result).then(res => {
               if (res.success === true) {
                 this.$Message.success('保存成功')

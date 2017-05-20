@@ -50,9 +50,9 @@
             key: 'isDimission',
             render (row) {
               if (row.isDimission === 0) {
-                return '<span>离职</span>'
+                return '<img style="width:25px" src="../../static/images/staffon.png" title="在职" alt="在职" >'
               } else {
-                return '<span>在职</span>'
+                return '<img style="width:25px" src="../../static/images/staffoff.png" title="离职" alt="离职">'
               }
             }
           },
