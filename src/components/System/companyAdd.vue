@@ -105,7 +105,8 @@
             { required: true, message: '姓名不能为空', trigger: 'blur' }
           ],
           phone: [
-            { required: true, message: '联系方式不能为空', trigger: 'blur' }
+            { required: true, message: '联系方式不能为空', trigger: 'blur' },
+            { type: 'hex', message: '手机格式不正确', trigger: 'blur' }
           ],
           logoImg: [
             { required: true, message: 'logo不能为空', trigger: 'change' }

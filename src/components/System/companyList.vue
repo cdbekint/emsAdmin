@@ -38,7 +38,7 @@
             key: 'logoImg',
             className: 'giftavater-wrapper',
             render (row) {
-              return '<img class="giftavater" :src="murl + row.logoImg"/>'
+              return '<img class="giftavater" :src="murl + row.logoImg" style="width:60px;height:60px;">'
             }
           },
           {
