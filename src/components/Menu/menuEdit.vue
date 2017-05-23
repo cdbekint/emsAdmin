@@ -3,11 +3,11 @@
     <div class="content-title">
       <div class="titlename" style="overflow: hidden">
         <Tag color="blue" style="float: right;margin-right:30px;width:100px;height:30px;font-size:1.0em;line-height: 30px;">
-          <router-link to="/menuGroupAdd" tag = "span">新增菜单分组</router-link>
+          <router-link to="/menuAdd" tag = "span">新增菜单分组</router-link>
         </Tag>
-        <Button type="info" style="float: right;margin-right:30px;">
-          <router-link to="/menuGroupList" tag = "span">菜单分组列表</router-link>
-        </Button>
+        <Tag color="blue" style="float: right;margin-right:30px;width:100px;height:30px;font-size:1.0em;line-height: 30px;">
+          <router-link to="/menuList" tag = "span">菜单分组列表</router-link>
+        </Tag>
       </div>
     </div>
     <div class="content" style = "width:70%;">
@@ -32,7 +32,8 @@
     data () {
       return {
         menuGroup: {
-          name
+          name: '',
+          id: ''
         },
         Rule: {
           name: [
@@ -41,14 +42,22 @@
         }
       }
     },
+    created () {
+      var query = this.util.getQuery(location.hash)
+      this.http.get('/api/a/sys/menu/get?id=' + query.id).then(res => {
+        if (res.success === true) {
+          this.menuGroup = res.result
+        }
+      })
+    },
     methods: {
       handleSubmit (name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.http.post('/api/a/sys/menuGroup/save', this.menuGroup).then(res => {
+            this.http.post('/api/a/sys/menu/save', this.menuGroup).then(res => {
               if (res.success === true) {
                 this.$Message.success('保存成功')
-                this.router.push('/menuGroupList')
+                this.router.push('/menuList')
               }
             })
           } else {

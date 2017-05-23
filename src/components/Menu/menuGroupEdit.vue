@@ -5,9 +5,9 @@
         <Tag color="blue" style="float: right;margin-right:30px;width:100px;height:30px;font-size:1.0em;line-height: 30px;">
           <router-link to="/menuGroupAdd" tag = "span">新增菜单分组</router-link>
         </Tag>
-        <Button type="info" style="float: right;margin-right:30px;">
+        <Tag color="blue" style="float: right;margin-right:30px;width:100px;height:30px;font-size:1.0em;line-height: 30px;">
           <router-link to="/menuGroupList" tag = "span">菜单分组列表</router-link>
-        </Button>
+        </Tag>
       </div>
     </div>
     <div class="content" style = "width:70%;">
@@ -28,7 +28,7 @@
 
 <script type="text/ecmascript-6">
   export default {
-    name: 'menuGroupAdd',
+    name: 'menuGroupEdit',
     data () {
       return {
         menuGroup: {
@@ -45,7 +45,7 @@
       var query = this.util.getQuery(location.hash)
       this.http.get('/api/a/sys/menuGroup/get?id=' + query.id).then(res => {
         if (res.success === true) {
-          this.companyData = res.result
+          this.menuGroup = res.result
         }
       })
     },

@@ -22,6 +22,8 @@ import menuList from '@/components/Menu/menuList'
 import menuAdd from '@/components/Menu/menuAdd'
 import menuEdit from '@/components/Menu/menuEdit'
 
+import page from '@/components/Menu/page'
+
 Vue.use(Router)
 Vue.use(iView)
 
@@ -39,7 +41,15 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home,
-      // redirect: '/companyList',
+      redirect: '/companyList',
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/page',
+      name: 'page',
+      component: page,
       meta: {
         requireAuth: true
       }

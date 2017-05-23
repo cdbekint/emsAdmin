@@ -46,6 +46,13 @@
             key: 'address'
           },
           {
+            title: '是否可用',
+            key: 'useable',
+            render (row) {
+              return row.useable === 0 ? '<span>不可用</span>' : '<span>可用</span>'
+            }
+          },
+          {
             title: '公司口号',
             key: 'slogan'
           },

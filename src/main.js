@@ -33,7 +33,6 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 
 axios.interceptors.request.use(function (config) {
-  debugger
   if (config.data) {
     config.data.access_token = store.state.token
   } else {
@@ -58,8 +57,7 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(
   response => {
     let res = {}
-    let data = response.data
-    debugger
+    let data = response.data;
     if (data.code === 200) {
       res.success = true
       res.result = data.result

@@ -13,6 +13,9 @@
           <Input v-model="menuGroup.name" placeholder="请输入"></Input>
         </Form-item>
 
+        <Form-item label="上级菜单Id" >
+          <Input v-model="menuGroup.parentId" placeholder="请输入"></Input>
+        </Form-item>
         <Form-item label="权限标记" prop="permission">
           <Input v-model="menuGroup.permission" placeholder="请输入"></Input>
         </Form-item>
@@ -27,6 +30,9 @@
           <Select v-model="menuGroup.groupId" placeholder="请选择">
             <Option v-for="item in groupList" :value="item.id">{{item.name}}</Option>
           </Select>
+        </Form-item>
+        <Form-item label="排序" >
+          <Input v-model="menuGroup.sort" placeholder="请输入"></Input>
         </Form-item>
         <Form-item>
           <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
@@ -44,11 +50,11 @@
       return {
         menuGroup: {
           name: '',
-          parentId: '',
+          parentId: 1,
           permission: '',
           isShow: 0,
           groupId: '',
-          sort: 0
+          sort: 1
         },
         groupList: [],
         Rule: {
