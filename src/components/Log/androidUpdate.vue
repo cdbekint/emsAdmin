@@ -75,7 +75,7 @@
         result['versionCode'] = ~~(result['versionCode']);
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.http.post('/api/a/base/baseVersion/save', result).then(res => {
+            this.http.post(this.$store.state.prefix + '/base/baseVersion/save', result).then(res => {
               if (res.success === true) {
                 this.$Message.success('保存成功')
                 this.router.push('/android')

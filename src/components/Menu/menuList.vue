@@ -68,7 +68,7 @@
     },
     methods: {
       getList (pageNo) {
-        this.http.get('/api/a/sys/menu/list?pageNo=' + pageNo || 1).then(res => {
+        this.http.get(this.$store.state.prefix + '/sys/menu/list?pageNo=' + pageNo || 1).then(res => {
           if (res.success === true) {
             this.companyData = res.result.list
           }
@@ -78,7 +78,7 @@
         this.router.push({path: '/menuEdit', query: {id: id}});
       },
       del (id) {
-        this.http.post('/api/a/sys/menu/delete', {id: id}).then(res => {
+        this.http.post(this.$store.state.prefix + '/sys/menu/delete', {id: id}).then(res => {
           if (res.success === true) {
             this.$Message.success('删除成功');
             this.getList(1);

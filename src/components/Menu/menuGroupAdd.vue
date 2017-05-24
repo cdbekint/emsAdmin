@@ -42,7 +42,7 @@
       handleSubmit (name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.http.post('/api/a/sys/menuGroup/save', this.menuGroup).then(res => {
+            this.http.post(this.$store.state.prefix + '/sys/menuGroup/save', this.menuGroup).then(res => {
               if (res.success === true) {
                 this.$Message.success('保存成功')
                 this.router.push('/menuGroupList')

@@ -70,7 +70,7 @@
     },
     methods: {
       getList (pageNo) {
-        this.http.get('/api/a/sys/company/list?page=' + pageNo || 1).then(res => {
+        this.http.get(this.$store.state.prefix + '/sys/company/list?pageNo=' + pageNo || 1).then(res => {
           if (res.result.count > 0) {
             this.pager = res.result
             this.companyData = res.result.list
@@ -80,11 +80,8 @@
       changePage () {
         this.getList(this.pager.pageNo)
       },
-      update (id) {
-        this.router.push({path: '/gift/edit', query: {id: id}});
-      },
       del (id) {
-        this.http.delete('/api/gift', {id: id}).then(res => {
+        this.http.delete('/gift', {id: id}).then(res => {
           if (res.error === false) {
             this.$Message.success('删除成功');
             this.getList(1);
