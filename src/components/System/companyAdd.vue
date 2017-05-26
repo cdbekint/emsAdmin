@@ -15,13 +15,20 @@
     </Form-item>
     <Form-item label="公司类型" prop="type">
       <Select v-model="company.type" placeholder="请选择公司类型">
-        <Option value="1">集团</Option>
-        <Option value="2">子公司</Option>
+        <Option value="1">系统公司</Option>
+        <Option value="2">模板公司</Option>
+        <Option value="3">商家公司</Option>
       </Select>
     </Form-item>
-    <Form-item label="公司区域" prop="areaId">
-      <Select v-model="company.areaId" placeholder="请选择所在地">
-        <Option v-for = "area in areas" :value="area.id" :key = "area">{{area.name}}</Option>
+    <Form-item label="公司区域" >
+      <Select v-model="areaOne.id" style="width:33%;" placeholder="请选择所在地" @on-change="change($event,1)" :label-in-value=true>
+        <Option v-for = "area in areasOne" :value="area.region_id" :key = "area" >{{area.region_name}}</Option>
+      </Select>
+      <Select v-model="areaTwo.id" style="width:33%;" placeholder="请选择所在地" :disabled="!areaOne.id" @on-change="change($event,2)" :label-in-value=true>
+        <Option v-for = "area in areasTwo" :value="area.region_id" :key = "area">{{area.region_name}}</Option>
+      </Select>
+      <Select v-model="company.areaId" style="width:33%;" placeholder="请选择所在地" :disabled="!areaTwo.id" @on-change="change($event,3)" :label-in-value=true>
+        <Option v-for = "area in areasThree" :value="area.region_id" :key = "area">{{area.region_name}}</Option>
       </Select>
     </Form-item>
     <Form-item label="具体地址" prop="address">
@@ -40,10 +47,9 @@
       <Input v-model="company.email"></Input>
     </Form-item>
     <Form-item label="初始化设置" prop="modelCid">
-<!--      <Select v-model="company.modelCid" placeholder="请选择所在地">
-        <Option v-for = "area in areas" :value="area.id">{{area.name}}</Option>
-      </Select>-->
-      <Input v-model="company.modelCid"></Input>
+      <Select v-model="company.modelCid" placeholder="请选择模板">
+        <Option v-for = "model in models" :key="model" :value="model.modelCid">{{model.modelName}}</Option>
+      </Select>
     </Form-item>
     <Form-item label="公司口号" >
       <Input v-model="company.slogan"></Input>
@@ -78,8 +84,22 @@
           modelCid: '',
           slogan: ''
         },
-        areas: [
-        ],
+        areaOne: {
+          id: null,
+          name: ''
+        },
+        areaTwo: {
+          id: null,
+          name: ''
+        },
+        areaThree: {
+          id: null,
+          name: ''
+        },
+        areasOne: [],
+        areasTwo: [],
+        areasThree: [],
+        models: [],
         ruleValidate: {
           name: [
             { required: true, message: '姓名不能为空', trigger: 'blur' }
@@ -89,9 +109,6 @@
           ],
           logoImg: [
             { required: true, message: 'logo不能为空', trigger: 'change' }
-          ],
-          areaId: [
-            { required: true, message: '选择地区', trigger: 'change' }
           ],
           type: [
             { required: true, message: '选择类型', trigger: 'change' }
@@ -125,9 +142,30 @@
     components: { uploader },
     created () {
       this.getArea(1);
+      this.getModel();
     },
     methods: {
+      change (e, val) {
+        if (val === 1) {
+          this.areaOne.name = e.label;
+          this.http.get('/api/a/sys/area/getRegion?parentId=' + e.value).then((res) => {
+            if (res.success === true) {
+              this.areasTwo = res.result;
+            }
+          });
+        } else if (val === 2) {
+          this.areaTwo.name = e.label;
+          this.http.get('/api/a/sys/area/getRegion?parentId=' + e.value).then((res) => {
+            if (res.success === true) {
+              this.areasThree = res.result;
+            }
+          });
+        } else {
+          this.areaThree.name = e.label;
+        }
+      },
       handleSubmit () {
+        this.company.address = this.areaOne.name + '-' + this.areaTwo.name + '-' + this.areaThree.name + '-' + this.company.address;
         var ai = JSON.parse(JSON.stringify(this.company))
         console.log(ai)
         if (!ai.name) {
@@ -171,12 +209,17 @@
       handleReset (name) {
         this.$refs[name].resetFields();
       },
-      getArea (p) {
-        this.http.get('/api/a/sys/area/list?pageNo=' + p).then((res) => {
-//          this.http.get('http://192.168.1.17:8080/a/sys/area/list?pageNo=' + p).then((res) => {
+      getModel () {
+        this.http.get('/api/a/sys/company/getModelCompanyInfo').then((res) => {
           if (res.success === true) {
-            this.areas = res.result.list;
-            console.log(this.areas)
+            this.models = res.result;
+          }
+        });
+      },
+      getArea () {
+        this.http.get('/api/a/sys/area/getRegion').then((res) => {
+          if (res.success === true) {
+            this.areasOne = res.result
           }
         });
       }

@@ -9,6 +9,11 @@
     </div>
     <div class="content">
       <Table border :columns="companyCol" :data="companyData" class="giftlistable"></Table>
+      <div style="margin: 10px;overflow: hidden">
+        <div style="float: right;">
+          <Page :total="pager.totalPage" :current="pager.pageNo" @on-change="changePage($event)"></Page>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -29,10 +34,11 @@
             title: '菜单名称',
             key: 'name'
           },
-          {
+/*          {
             title: '链接',
             key: 'href'
           },
+          */
           {
             title: '权限标识',
             key: 'permission'
@@ -50,7 +56,11 @@
             }
           }
         ],
-        companyData: []
+        companyData: [],
+        pager: {
+          totalPage: 23,
+          pageNo: 1
+        }
       }
     },
     created () {
@@ -58,7 +68,7 @@
     },
     methods: {
       getList (pageNo) {
-        this.http.get('/api/a/sys/menu/list?pageNo=' + pageNo).then(res => {
+        this.http.get('/api/a/sys/menu/list?pageNo=' + pageNo || 1).then(res => {
           if (res.success === true) {
             this.companyData = res.result.list
           }
@@ -68,12 +78,15 @@
         this.router.push({path: '/menuEdit', query: {id: id}});
       },
       del (id) {
-        this.http.delete('/api/a/sys/menuGroup/delete', {id: id}).then(res => {
+        this.http.post('/api/a/sys/menu/delete', {id: id}).then(res => {
           if (res.success === true) {
             this.$Message.success('删除成功');
             this.getList(1);
           }
         })
+      },
+      changePage (e) {
+        this.getList(e)
       }
     }
   }

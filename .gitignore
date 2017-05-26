@@ -60,3 +60,4 @@ typings/
 .env
 src/Component/Render/Shader/lib/
 test/unit/core/Entity/
+src/main.js
