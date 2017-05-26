@@ -18,12 +18,14 @@
         <Form-item label="版本描述" prop="versionDesc">
           <Input v-model="android.versionDesc" placeholder="请输入"></Input>
         </Form-item>
-        <Form-item label="下载地址" prop="versionUrl">
-          <Input v-model="android.versionUrl" placeholder="请输入"></Input>
-        </Form-item>
         <Form-item label="下载包" class="text-left" >
           <uploader :config="uploaderconfig"></uploader>
+        </Form-item>
+        <Form-item label="应用大小" >
           <Input v-model="android.packgeSize"></Input>
+        </Form-item>
+        <Form-item label="下载地址" >
+          <Input v-model="android.versionUrl" ></Input>
         </Form-item>
 
         <Form-item>
@@ -55,17 +57,15 @@
           ],
           versionDesc: [
             {required: true, message: '版本描述不能为空', trigger: 'blur'}
-          ],
-          versionUrl: [
-            {required: true, message: '下载地址不能为空', trigger: 'blur'}
           ]
         },
         uploaderconfig: {
           maxSize: 5120,
-          format: ['jpg'],
+          format: ['jpg', 'apk'],
           showUploadList: false,
           parent: 'android',
-          size: 'packgeSize'
+          size: 'packgeSize',
+          child: 'versionUrl'
         }
       }
     },

@@ -49,7 +49,7 @@
             title: '下载地址',
             key: 'versionUrl',
             render (row) {
-              return '<a class="giftavater" :href = "row.versionUrl">{{row.versionUrl}}</a>'
+              return '<a class="giftavater" :href = "murl + row.versionUrl">{{murl + row.versionUrl}}</a>'
             }
           }
         ],
