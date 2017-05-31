@@ -4,7 +4,7 @@
       <div class="titlename" style="overflow: hidden">
         <Tag color="blue" style="float: right;margin-right:30px;width:100px;height:30px;font-size:1.0em;line-height: 30px;">
           <router-link to="/androidUpdate" tag = "span">更新版本</router-link>
-        </Tag>>
+        </Tag>
       </div>
     </div>
     <div class="content">
@@ -20,12 +20,6 @@
       return {
         companyCol: [
           {
-            title: '序号',
-            type: 'index',
-            width: 60,
-            align: 'center'
-          },
-          {
             title: '版本名称',
             key: 'versionName'
           },
@@ -39,7 +33,10 @@
           },
           {
             title: '发布时间',
-            key: 'versionTime'
+            key: 'versionTime',
+            render (row) {
+              return '<span>{{new Date(row.versionTime)}}</span>'
+            }
           },
           {
             title: '应用包大小',
