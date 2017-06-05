@@ -7,6 +7,7 @@ import Home from '@/components/Main/Home'
 import login from '@/Login.vue'
 import companyAdd from '@/components/System/companyAdd'
 import companyList from '@/components/System/companyList'
+import companyEdit from '@/components/System/companyEdit'
 import staffList from '@/components/System/staffList'
 
 import systemLog from '@/components/Log/systemLog'
@@ -66,6 +67,14 @@ export default new Router({
       path: '/companyList',
       name: 'companyList',
       component: companyList,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/companyEdit',
+      name: 'companyEdit',
+      component: companyEdit,
       meta: {
         requireAuth: true
       }

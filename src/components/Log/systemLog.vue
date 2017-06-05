@@ -2,8 +2,19 @@
   <div class="companyList">
     <div class="content-title">
       <div class="titlename">
-        <Input style="width:60%;margin:auto;" v-model = "searchVal" placeholder="请输入接口地址" >
+        <span>选择类型：</span>
+        <Select v-model="searchVal.type" slot="prepend" style="width:30%;">
+          <Option value="1">安卓</Option>
+          <Option value="2">苹果</Option>
+          <Option value="3">web</Option>
+          <Option value="4">异常</Option>
+          <Option value="5">推送日志</Option>
+          <Option value="6">推送</Option>
+        </Select>
+        <span style = "margin-left:25px;">输入创建者：</span>
+        <Input style="width:30%;margin:auto;" v-model = "searchVal.name" >
         </Input>
+        <Button type="primary" icon="ios-search" @click = "search(1)">查询</Button>
       </div>
     </div>
     <div class="content">
@@ -55,8 +66,10 @@
           }
         ],
         companyData: [],
-        datas: [],
-        searchVal: '',
+        searchVal: {
+          type: 1,
+          use: ''
+        },
         pager: {
           totalPage: 1,
           pageNo: 1
@@ -68,28 +81,27 @@
     },
     methods: {
       getList (pageNo) {
-        this.http.get('/api/a/sys/log/list?pageNo=' + pageNo || 1).then(res => {
+        this.http.get(this.$store.state.prefix + '/sys/log/list?pageNo=' + pageNo || 1).then(res => {
           if (res.success === true) {
             this.pager.totalPage = res.result.totalPage
             this.pager.pageNo = res.result.pageNo
-            this.datas = res.result.list;
-            this.companyData = this.datas;
+            this.companyData = res.result.list;
+          }
+        })
+      },
+      search (pageNo) {
+        var type = this.searchVal.type;
+        var user = this.searchVal.use;
+        this.http.get(this.$store.state.prefix + '/sys/log/list?type=' + type + '&createName=' + user + '&pageNo=' + pageNo || 1).then(res => {
+          if (res.success === true) {
+            this.pager.totalPage = res.result.totalPage
+            this.pager.pageNo = res.result.pageNo
+            this.companyData = res.result.list
           }
         })
       },
       changePage (e) {
         this.getList(e)
-      }
-    },
-    watch: {
-      searchVal: function (nval, oval) {
-        if (this.util.isNull(nval) === false) {
-          this.companyData = this.companyData.filter(function (item) {
-            return item.requestUri.indexOf(nval) !== -1;
-          })
-        } else {
-          this.companyData = this.datas;
-        }
       }
     }
   }

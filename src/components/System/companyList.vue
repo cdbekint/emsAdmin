@@ -2,8 +2,18 @@
   <div class="companyList">
     <div class="content-title">
       <div class="titlename">
-        <Input style="width:60%;margin:auto;" placeholder="请输入查询公司名称" v-model="searchVal">
-        </Input>
+        <span>选择类型：</span>
+        <Select v-model="searchVal.type" slot="prepend" style="width:30%;">
+          <Option value="1">系统公司</Option>
+          <Option value="2">模板公司</Option>
+          <Option value="3">商家公司</Option>
+        </Select>
+        <span style = "margin-left:25px;">选择是否可用：</span>
+        <Select v-model="searchVal.use" slot="prepend" style="width:30%;">
+          <Option value="1">可用</Option>
+          <Option value="2">不可用</Option>
+        </Select>
+        <Button type="primary" icon="ios-search" @click = "search(1)">查询</Button>
       </div>
     </div>
     <div class="content">
@@ -38,7 +48,7 @@
             key: 'logoImg',
             className: 'giftavater-wrapper',
             render (row) {
-              return '<img class="giftavater" :src="murl + row.logoImg"/>'
+              return '<img class="giftavater" :src="murl + row.logoImg" style="width:60px;height:60px;">'
             }
           },
           {
@@ -60,13 +70,15 @@
             title: '操作',
             key: 'action',
             render (row) {
-              return '<i-button type="text" size="small" @click="del(row.id)">删除</i-button>'
+              return '<i-button type="text" size="small" @click="update(row.id)">修改</i-button>'
             }
           }
         ],
         companyData: [],
-        datas: [],
-        searchVal: '',
+        searchVal: {
+          type: 1,
+          use: 1
+        },
         pager: {
           totalPage: 1,
           pageNo: 1
@@ -78,11 +90,22 @@
     },
     methods: {
       getList (pageNo) {
-        this.http.get('/api/a/sys/company/list?page=' + pageNo || 1).then(res => {
-          if (res.result.count > 0) {
-            this.pager = res.result
-            this.datas = res.result.list
-            this.companyData = this.datas
+        this.http.get(this.$store.state.prefix + '/sys/company/list?type=1&pageNo=' + pageNo || 1).then(res => {
+          if (res.success === true) {
+            this.pager.totalPage = res.result.totalPage
+            this.pager.pageNo = res.result.pageNo
+            this.companyData = res.result.list
+          }
+        })
+      },
+      search (pageNo) {
+        var type = this.searchVal.type;
+        var use = this.searchVal.use;
+        this.http.get(this.$store.state.prefix + '/sys/company/list?type=' + type + '&useable=' + use + '&pageNo=' + pageNo || 1).then(res => {
+          if (res.success === true) {
+            this.pager.totalPage = res.result.totalPage
+            this.pager.pageNo = res.result.pageNo
+            this.companyData = res.result.list
           }
         })
       },
@@ -91,28 +114,6 @@
       },
       update (id) {
         this.router.push({path: '/companyEdit', query: {id: id}});
-      },
-      del (id) {
-        this.http.delete('/api/a/sys/company/delete', {id: id}).then(res => {
-          if (res.error === false) {
-            this.$Message.success('删除成功');
-            this.getList(1);
-          }
-        })
-      }
-    },
-    watch: {
-      searchVal: function (nval, oval) {
-        if (this.util.isNull(nval) === false) {
-          this.companyData = this.companyData.filter(function (item) {
-            return item.name.indexOf(nval) !== -1;
-          })
-          if (this.companyData.length === 0) {
-            this.companyData = this.datas;
-          }
-        } else {
-          this.companyData = this.datas;
-        }
       }
     }
   }

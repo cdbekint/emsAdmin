@@ -46,7 +46,7 @@
     },
     methods: {
       getList () {
-        this.http.get('/api/a/sys/menuGroup/list').then(res => {
+        this.http.get(this.$store.state.prefix + '/sys/menuGroup/list').then(res => {
           if (res.success === true) {
             this.companyData = res.result
           }
@@ -56,7 +56,7 @@
         this.router.push({path: '/menuGroupEdit', query: {id: id}});
       },
       del (id) {
-        this.http.post('/api/a/sys/menuGroup/delete', {id: id}).then(res => {
+        this.http.post(this.$store.state.prefix + '/sys/menuGroup/delete', {id: id}).then(res => {
           if (res.success === true) {
             this.$Message.success('删除成功');
             this.getList(1);

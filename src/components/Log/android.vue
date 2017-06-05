@@ -49,7 +49,7 @@
             title: '下载地址',
             key: 'versionUrl',
             render (row) {
-              return '<a target="_blank" :href = "murl + row.versionUrl">{{row.versionUrl}}</a>'
+              return '<a class="giftavater" :href = "murl + row.versionUrl">{{murl + row.versionUrl}}</a>'
             }
           }
         ],
@@ -61,7 +61,7 @@
     },
     methods: {
       getList () {
-        this.http.get('/api/a/base/baseVersion/findLatest').then(res => {
+        this.http.get(this.$store.state.prefix + '/base/baseVersion/findLatest').then(res => {
           if (res.success === true) {
             this.companyData.push(res.result)
           }

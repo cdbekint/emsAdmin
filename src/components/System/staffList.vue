@@ -2,8 +2,10 @@
   <div class="staffList">
     <div class="content-title">
       <div class="titlename" style="margin:10px;">
-        <Input style="width:40%;margin:auto;margin-right:20px;" placeholder="请输入员工姓名" v-model="staffName"></Input>
-        <Input style="width:40%;margin:auto;" placeholder="请输入公司名称" v-model="companyName"></Input>
+        <span>输入员工姓名或者联系电话：</span>
+        <Input v-model="searchVal" slot="prepend" style="width:60%;">
+        </Input>
+        <Button type="primary" icon="ios-search" @click = "search()">查询</Button>
       </div>
     </div>
     <div class="content">
@@ -62,9 +64,7 @@
           }
         ],
         companyData: [],
-        datas: [],
-        staffName: '',
-        companyName: '',
+        searchVal: '',
         pager: {
           totalPage: 1,
           pageNo: 1
@@ -76,42 +76,23 @@
     },
     methods: {
       getList () {
-        this.http.get('/api/a/operation/getAllUserInfo').then(res => {
-          if (res.result.count > 0) {
+        this.http.get(this.$store.state.prefix + '/operation/getAllUserInfo').then(res => {
+          if (res.success === true) {
             this.pager = res.result
-            this.datas = res.result.list
-            this.companyData = this.datas
+            this.companyData = res.result.list
+          }
+        })
+      },
+      search (pageNo) {
+        this.http.get(this.$store.state.prefix + '/operation/getAllUserInfo?name=' + this.searchVal).then(res => {
+          if (res.success === true) {
+            this.pager = res.result
+            this.companyData = res.result.list
           }
         })
       },
       changePage () {
         this.getList(this.pager.pageNo)
-      }
-    },
-    watch: {
-      companyName: function (nval, oval) {
-        if (this.util.isNull(nval) === false) {
-          this.companyData = this.companyData.filter(function (item) {
-            return item.name.indexOf(nval) !== -1;
-          })
-          if (this.companyData.length === 0) {
-            this.companyData = this.datas;
-          }
-        } else {
-          this.companyData = this.datas;
-        }
-      },
-      staffName: function (nval, oval) {
-        if (this.util.isNull(nval) === false) {
-          this.companyData = this.companyData.filter(function (item) {
-            return item.name.indexOf(nval) !== -1;
-          })
-          if (this.companyData.length === 0) {
-            this.companyData = this.datas;
-          }
-        } else {
-          this.companyData = this.datas;
-        }
       }
     }
   }

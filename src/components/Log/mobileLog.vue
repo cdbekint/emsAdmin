@@ -62,7 +62,7 @@
     },
     methods: {
       getList () {
-        this.http.get('/api/a/sys/log/getMobileLog?systemType=1').then(res => {
+        this.http.get(this.$store.state.prefix + '/sys/log/getMobileLog?systemType=1').then(res => {
           if (Object.keys(res.result).length > 0) {
             this.companyData.push(res.result)
           }

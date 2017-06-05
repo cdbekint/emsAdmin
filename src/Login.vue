@@ -67,7 +67,7 @@ export default {
       this.$refs[name].validate((valid) => {
         if (valid) {
           const param = JSON.parse(JSON.stringify(this.formInline))
-          this.http.post('/api/a/login' + this.util.parseParam(param).replace('&', '?')).then(res => {
+          this.http.post(this.$store.state.prefix + '/login' + this.util.parseParam(param).replace('&', '?')).then(res => {
             if (res.success === true) {
               if (res.result.access_token) {
                 this.$store.state.token = res.result.access_token
@@ -86,7 +86,7 @@ export default {
       })
     },
     Register () {
-      this.http.post('/api/account/register', this.register).then(res => {
+      this.http.post(this.$store.state.prefix + '/account/register', this.register).then(res => {
         console.log(res)
       })
     }

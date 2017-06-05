@@ -13,14 +13,16 @@ Vue.use(Vuex)
 Vue.prototype.http = axios
 Vue.prototype.router = router
 Vue.prototype.util = util
-Vue.prototype.murl = '//m.ems.cdbeki.com/'
+Vue.prototype.murl = 'http://m.ems.cdbeki.com/'
 
 /* eslint-disable no-new */
 const store = new Vuex.Store({
   state: {
     token: util.getCookie('token') || '',
     // companyId: util.getCookie('companyId') || '',
-    qiniutoken: util.getCookie('qiniutoken') || ''
+    qiniutoken: util.getCookie('qiniutoken') || '',
+    // prefix: '/api/a'
+    prefix: '/a'
   },
   mutations: {
     updateToken (state) {

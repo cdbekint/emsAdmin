@@ -65,7 +65,7 @@
       }
     },
     created () {
-      this.http.get('/api/a/sys/menuGroup/list').then(res => {
+      this.http.get(this.$store.state.prefix + '/sys/menuGroup/list').then(res => {
         if (res.success === true) {
           this.groupList = res.result;
         }
@@ -75,8 +75,7 @@
       handleSubmit (name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            console.log(this.menuGroup)
-            this.http.post('/api/a/sys/menu/save', this.menuGroup).then(res => {
+            this.http.post(this.$store.state.prefix + '/sys/menu/save', this.menuGroup).then(res => {
               if (res.success === true) {
                 this.$Message.success('保存成功')
                 this.router.push('/menuList')

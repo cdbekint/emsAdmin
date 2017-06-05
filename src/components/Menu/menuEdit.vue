@@ -44,7 +44,7 @@
     },
     created () {
       var query = this.util.getQuery(location.hash)
-      this.http.get('/api/a/sys/menu/get?id=' + query.id).then(res => {
+      this.http.get(this.$store.state.prefix + '/sys/menu/get?id=' + query.id).then(res => {
         if (res.success === true) {
           this.menuGroup = res.result
         }
@@ -54,7 +54,7 @@
       handleSubmit (name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.http.post('/api/a/sys/menu/save', this.menuGroup).then(res => {
+            this.http.post(this.$store.state.prefix + '/sys/menu/save', this.menuGroup).then(res => {
               if (res.success === true) {
                 this.$Message.success('保存成功')
                 this.router.push('/menuList')

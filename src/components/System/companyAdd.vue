@@ -148,14 +148,14 @@
       change (e, val) {
         if (val === 1) {
           this.areaOne.name = e.label;
-          this.http.get('/api/a/sys/area/getRegion?parentId=' + e.value).then((res) => {
+          this.http.get(this.$store.state.prefix + '/sys/area/getRegion?parentId=' + e.value).then((res) => {
             if (res.success === true) {
               this.areasTwo = res.result;
             }
           });
         } else if (val === 2) {
           this.areaTwo.name = e.label;
-          this.http.get('/api/a/sys/area/getRegion?parentId=' + e.value).then((res) => {
+          this.http.get(this.$store.state.prefix + '/sys/area/getRegion?parentId=' + e.value).then((res) => {
             if (res.success === true) {
               this.areasThree = res.result;
             }
@@ -200,7 +200,7 @@
           this.$Notice.info({title: '请完善信息', desc: '请输入活动定金'})
           return false
         }
-        this.http.post('/api/a/sys/company/save', this.company).then((res) => {
+        this.http.post(this.$store.state.prefix + '/sys/company/save', this.company).then((res) => {
           if (res.success === true) {
             this.$Message.success('新增成功')
           }
@@ -210,14 +210,14 @@
         this.$refs[name].resetFields();
       },
       getModel () {
-        this.http.get('/api/a/sys/company/getModelCompanyInfo').then((res) => {
+        this.http.get(this.$store.state.prefix + '/sys/company/getModelCompanyInfo').then((res) => {
           if (res.success === true) {
             this.models = res.result;
           }
         });
       },
       getArea () {
-        this.http.get('/api/a/sys/area/getRegion').then((res) => {
+        this.http.get(this.$store.state.prefix + '/sys/area/getRegion').then((res) => {
           if (res.success === true) {
             this.areasOne = res.result
           }
