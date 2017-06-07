@@ -24,7 +24,7 @@
         <Form-item label="正标题" >
           <Input v-model="datas.sort" placeholder="请输入"></Input>
         </Form-item>
-        <Form-item label="正标题" >
+        <Form-item label="副标题" >
           <Input v-model="datas.sort" placeholder="请输入"></Input>
         </Form-item>
         <Form-item>

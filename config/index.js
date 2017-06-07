@@ -29,6 +29,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
+          // target: 'http://ems.cdbeki.com',
           target: 'http://121.42.30.136:8082',
           changeOrigin: true,
           pathRewrite: {

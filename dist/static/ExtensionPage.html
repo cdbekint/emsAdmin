@@ -49,7 +49,7 @@
         $("#yindao").show();
         showImg = true;
 
-        $("#btn_href").click(function(e){
+        $(".btn_href").click(function(){
           if(!showImg) {
             $("#yindao").show();
             showImg = true;
@@ -65,7 +65,7 @@
         });
 
       }else{
-        $.getJSON("http://ems.cdbeki.com/a/base/baseVersion/findLatest",function (res) {
+        $.getJSON("http://121.42.30.136:8082/a/base/baseVersion/findLatest",function (res) {
           if(res.code == 200) {
             $("#btn_href").attr("href", "http://m.ems.cdbeki.com/lqlrXaht1jTt_GuaSCPDlm2NDXdu"+res.result.versionUrl);
           }
