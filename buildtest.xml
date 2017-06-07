@@ -13,12 +13,19 @@
 
 	<target name="all">
 		<antcall target="clean" />
+		<antcall target="creat" />
 		<antcall target="copy2target" />
 	</target>
 
 	<target name="clean">
 		<echo message="clean target files：${build} and ${target}" />
 		<sshexec host="10.163.243.179" port="22" username="root" password="Baiqi@Linux" command="cd ${target};rm -rf static *.html" trust="true" />
+	</target>
+
+	<target name="creat">
+		<echo message="creat target dir：${target}" />
+		<tstamp />
+		<mkdir dir="${target}" />
 	</target>
 
 	<target name="copy2target">
