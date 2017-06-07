@@ -60,7 +60,7 @@
           ]
         },
         uploaderconfig: {
-          maxSize: 5120,
+          maxSize: 102400,
           showUploadList: false,
           parent: 'android',
           size: 'packgeSize',

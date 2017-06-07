@@ -21,13 +21,13 @@
       </Select>
     </Form-item>
     <Form-item label="公司区域" >
-      <Select v-model="areaOne.id" style="width:33%;" placeholder="请选择所在地" @on-change="change($event,1)" :label-in-value=true>
+      <Select v-model="areaOne.id" style="width:32%;" placeholder="请选择所在地" @on-change="change($event,1)" :label-in-value=true>
         <Option v-for = "area in areasOne" :value="area.region_id" :key = "area" >{{area.region_name}}</Option>
       </Select>
-      <Select v-model="areaTwo.id" style="width:33%;" placeholder="请选择所在地" :disabled="!areaOne.id" @on-change="change($event,2)" :label-in-value=true>
+      <Select v-model="areaTwo.id" style="width:32%;" placeholder="请选择所在地" :disabled="!areaOne.id" @on-change="change($event,2)" :label-in-value=true>
         <Option v-for = "area in areasTwo" :value="area.region_id" :key = "area">{{area.region_name}}</Option>
       </Select>
-      <Select v-model="company.areaId" style="width:33%;" placeholder="请选择所在地" :disabled="!areaTwo.id" @on-change="change($event,3)" :label-in-value=true>
+      <Select v-model="company.areaId" style="width:32%;" placeholder="请选择所在地" :disabled="!areaTwo.id" @on-change="change($event,3)" :label-in-value=true>
         <Option v-for = "area in areasThree" :value="area.region_id" :key = "area">{{area.region_name}}</Option>
       </Select>
     </Form-item>

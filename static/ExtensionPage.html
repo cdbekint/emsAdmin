@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>英雄联盟</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="css/page.css">
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+<body>
+<div class = "page">
+  <img src="./images/yindao.png" class="bg bg2" id="yindao">
+  <img src="./images/tui.png" class="bg">
+  <div class = "btn">
+    <div class="btn_div">加入联盟</div>
+  </div>
+</div>
+<script>
+  $(function () {
+    var html = document.documentElement;
+    html.style.fontSize = html.getBoundingClientRect().width / 10 + 'px';
+
+    var showImg = true;
+    $(".btn").click(function () {
+      console.log(1)
+/*      $.getJSON("",function (res) {
+
+      })*/
+    });
+    $(document).click(function () {
+      if(showImg){
+        $("#yindao").hide();
+      }
+    })
+  })
+</script>
+</body>
+</html>

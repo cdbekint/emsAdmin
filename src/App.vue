@@ -30,16 +30,7 @@
                   财务系统
                </template>
                 <Menu-item name="2-1">
-                  <router-link to="/companyAdd" tag = "div">新增公司</router-link>
-                </Menu-item>
-                <Menu-item name="2-2">
-                  <router-link to="/companyList" tag = "div">公司列表</router-link>
-                </Menu-item>
-                <Menu-item name="2-3">
-                  <router-link to="/companyInfo" tag = "div">公司信息</router-link>
-                </Menu-item>
-                <Menu-item name="2-4">
-                  <router-link to="/systemInfo" tag = "div">系统用户查看</router-link>
+                  <router-link to="/moneyLog" tag = "div">续费记录</router-link>
                 </Menu-item>
               </Submenu>
               <Submenu name="3">
@@ -70,6 +61,30 @@
                 </Menu-item>
                 <Menu-item name="4-3">
                   <router-link to="/page" tag = "div">推广页面设置</router-link>
+                </Menu-item>
+              </Submenu>
+              <Submenu name="5">
+                <template slot="title">
+                  <Icon type="ios-keypad"></Icon>
+                  学习视频管理
+                </template>
+                <Menu-item name="5-1">
+                  <router-link to="/classList" tag = "div">课程管理</router-link>
+                </Menu-item>
+                <Menu-item name="5-2">
+                  <router-link to="/classManager" tag = "div">课程章节</router-link>
+                </Menu-item>
+              </Submenu>
+              <Submenu name="6">
+                <template slot="title">
+                  <Icon type="ios-keypad"></Icon>
+                 新闻管理
+                </template>
+                <Menu-item name="6-1">
+                  <router-link to="/bannerList" tag = "div">Banner管理</router-link>
+                </Menu-item>
+                <Menu-item name="6-2">
+                  <router-link to="/newmessList" tag = "div">新闻动态管理</router-link>
                 </Menu-item>
               </Submenu>
             </Menu>
