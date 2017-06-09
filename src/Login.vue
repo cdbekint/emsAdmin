@@ -72,6 +72,7 @@ export default {
               if (res.result.access_token) {
                 this.$store.state.token = res.result.access_token
                 this.util.setCookie('token', res.result.access_token)
+                this.util.setCookie('userName', this.formInline.username)
               }
               this.router.push('/')
             } else {

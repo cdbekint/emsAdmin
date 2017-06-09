@@ -19,10 +19,10 @@ Vue.prototype.murl = 'http://m.ems.cdbeki.com/'
 const store = new Vuex.Store({
   state: {
     token: util.getCookie('token') || '',
-    // companyId: util.getCookie('companyId') || '',
     qiniutoken: util.getCookie('qiniutoken') || '',
-    // prefix: '/api/a'
-    prefix: '/a'
+    userName: util.getCookie('userName') || '',
+    prefix: '/api/a'
+    // prefix: '/a'
   },
   mutations: {
     updateToken (state) {

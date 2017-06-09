@@ -46,7 +46,13 @@
     name: 'android',
     data () {
       return {
-        android: null,
+        android: {
+          versionCode: '',
+          versionName: '',
+          versionDesc: '',
+          versionUrl: '',
+          packgeSize: 0
+        },
         desc: []
       }
     },

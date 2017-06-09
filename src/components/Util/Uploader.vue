@@ -5,7 +5,7 @@
         :show-upload-list="config.showUploadList"
         :format="config.format"
         :max-size="config.maxSize"
-        :data="{token: $store.state.qiniutoken}"
+        :data="{token: $store.state.qiniutoken,key:fileName}"
         :on-success="uploadSuccess"
         :on-progress="uploadProgress"
         :before-upload="uploadBefore"
@@ -27,12 +27,15 @@ export default {
       item: {
         showProgress: false,
         percentage: 0
-      }
+      },
+      fileName: ''
     }
   },
-  mounted () {
-  },
   created () {
+    var date = new Date()
+    console.log(this.$store.state)
+    this.fileName = this.$store.state.userName + '/' + date.getFullYear() + (date.getMonth() + 1) + date.getDate() + ~~(Math.random() * 100000) + '.apk'
+
     this.http.get('/api/a/sys/common/getUploadToken').then(res => {
       if (res.success === true) {
         this.$store.state.qiniutoken = res.result.token
@@ -64,7 +67,6 @@ export default {
       } else if (this.config.parent) {
         this.$parent[this.config.parent] = res.key
       }
-      this.config.callback.call(this.config.bind);
     },
     uploadError (error, res, file) {
       this.item.showProgress = false
