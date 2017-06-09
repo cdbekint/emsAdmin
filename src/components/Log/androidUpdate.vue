@@ -9,6 +9,7 @@
     </div>
     <div class="content">
       <Form ref="formValidate" :model="android" class="gifteditform" :rules="Rule" :label-width="100">
+        <div style="color:red;font-size:1.2em;">*输入版本信息之后才可上传文件</div>
         <Form-item label="版本号" prop="versionCode">
           <Input v-model="android.versionCode" placeholder="请输入"></Input>
         </Form-item>
@@ -18,13 +19,13 @@
         <Form-item label="版本描述" prop="versionDesc">
           <Input type="textarea" :rows="4" v-model="android.versionDesc" placeholder="请输入"></Input>
         </Form-item>
-        <Form-item label="下载包" class="text-left" >
-          <uploader :config="uploaderconfig"></uploader>
+        <Form-item label="下载包" class="text-left" v-if="useLoad">
+          <uploader :config="uploaderconfig" :name="fileName"></uploader>
         </Form-item>
-        <Form-item label="应用大小" >
+        <Form-item label="应用大小" v-if="useLoad">
           <Input v-model="android.packgeSize"></Input>
         </Form-item>
-        <Form-item label="下载地址" >
+        <Form-item label="下载地址" v-if="useLoad">
           <Input v-model="android.versionUrl" ></Input>
         </Form-item>
 
@@ -59,16 +60,30 @@
             {required: true, message: '版本描述不能为空', trigger: 'blur'}
           ]
         },
+        fileName: '',
+        useLoad: false,
         uploaderconfig: {
           maxSize: 102400,
           showUploadList: false,
           parent: 'android',
           size: 'packgeSize',
+          name: '',
           child: 'versionUrl'
         }
       }
     },
     watch: {
+      android: {
+        handler (val) {
+          this.fileName = val.versionName
+          if (this.fileName !== '') {
+            this.useLoad = true
+          } else {
+            this.useLoad = false
+          }
+        },
+        deep: true
+      }
     },
     methods: {
       handleSubmit (name) {

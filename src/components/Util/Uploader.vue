@@ -21,7 +21,7 @@
 <script type="text/ecmascript-6">
 export default {
   name: 'Uploader',
-  props: [ 'config' ],
+  props: ['config', 'name'],
   data () {
     return {
       item: {
@@ -31,11 +31,13 @@ export default {
       fileName: ''
     }
   },
+  watch: {
+    name (val) {
+      var name = val.replace(/\./g, '_')
+      this.fileName = this.$store.state.userName + '/英雄联盟生态系统_' + name + '.apk';
+    }
+  },
   created () {
-    var date = new Date()
-    console.log(this.$store.state)
-    this.fileName = this.$store.state.userName + '/' + date.getFullYear() + (date.getMonth() + 1) + date.getDate() + ~~(Math.random() * 100000) + '.apk'
-
     this.http.get('/api/a/sys/common/getUploadToken').then(res => {
       if (res.success === true) {
         this.$store.state.qiniutoken = res.result.token

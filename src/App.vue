@@ -17,10 +17,10 @@
                 <Menu-item name="1-2">
                   <router-link to="/companyAdd" tag = "div">新增公司</router-link>
                 </Menu-item>
+                <!--<Menu-item name="1-3">-->
+                  <!--<router-link to="/companyInfo" tag = "div">公司信息</router-link>-->
+                <!--</Menu-item>-->
                 <Menu-item name="1-3">
-                  <router-link to="/companyInfo" tag = "div">公司信息</router-link>
-                </Menu-item>
-                <Menu-item name="1-4">
                   <router-link to="/staffList" tag = "div">系统用户查看</router-link>
                 </Menu-item>
               </Submenu>

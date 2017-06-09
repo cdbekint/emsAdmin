@@ -64,7 +64,7 @@
         this.http.get(this.$store.state.prefix + '/base/baseVersion/findLatest').then(res => {
           if (res.success === true) {
             this.android = res.result
-            this.android.packgeSize = (~~this.android.packgeSize / 1000000).toFixed(2) + '  M'
+            this.android.packgeSize = (~~this.android.packgeSize / 1048576).toFixed(2) + '  M'
             this.desc = this.android.versionDesc.match(/(\d.*)/g);
           }
         })

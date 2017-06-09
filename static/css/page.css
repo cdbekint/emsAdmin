@@ -1,15 +1,16 @@
 html, body {
   margin: 0px;
-  padding: 0px; }
+  padding: 0px;
+  height: 100%; }
 
 .page {
   position: relative;
-  height: 16.08889rem;
+  height: 100%;
   width: 100%;
   overflow-y: hidden; }
   .page .bg {
     width: 100%;
-    height: 16.08889rem;
+    height: 100%;
     position: absolute;
     top: 0px;
     left: 0px; }
