@@ -64,6 +64,7 @@ export default {
       } else if (this.config.parent) {
         this.$parent[this.config.parent] = res.key
       }
+      this.config.callback.call(this.config.bind);
     },
     uploadError (error, res, file) {
       this.item.showProgress = false

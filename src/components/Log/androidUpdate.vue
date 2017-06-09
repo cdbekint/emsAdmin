@@ -64,9 +64,15 @@
           showUploadList: false,
           parent: 'android',
           size: 'packgeSize',
-          child: 'versionUrl'
+          child: 'versionUrl',
+          bind: this,
+          callback () {
+            this.android.versionUrl += '.apk'
+          }
         }
       }
+    },
+    watch: {
     },
     methods: {
       handleSubmit (name) {
