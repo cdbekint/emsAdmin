@@ -4,15 +4,16 @@
 html,body{
   margin:0px;
   padding: 0px;
+  height:100%;
 }
 .page {
   position: relative;
-  height:rrem(724px);
+  height:100%;
   width:100%;
   overflow-y: hidden;
   .bg {
     width: 100%;
-    height: rrem(724px);
+    height:100%;
     position: absolute;
     top:0px;
     left:0px
