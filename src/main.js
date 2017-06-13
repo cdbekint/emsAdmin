@@ -51,6 +51,7 @@ axios.interceptors.request.use(function (config) {
   if (config.method !== 'get') {
     config.data = qs.stringify(config.data)
   }
+  console.log(config)
   return config
 }, function (error) {
   return Promise.reject(error)

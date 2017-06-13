@@ -38,7 +38,7 @@ export default {
     }
   },
   created () {
-    this.http.get('/api/a/sys/common/getUploadToken').then(res => {
+    this.http.get(this.$store.state.prefix + '/sys/common/getUploadToken').then(res => {
       if (res.success === true) {
         this.$store.state.qiniutoken = res.result.token
         this.util.setCookie('qiniutoken', res.result.token)
