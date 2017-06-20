@@ -5,12 +5,12 @@
       <Input v-model="company.name" placeholder="请输入姓名"></Input>
     </Form-item>
     <Form-item label="公司logo" class="text-left" >
-      <uploader :config="uploaderconfig"> </uploader>
+      <fileLoad :config="uploaderconfig"> </fileLoad>
       <input type="hidden" v-model="company.logoImg">
     </Form-item>
     <Form-item label="图片预览">
       <a :href="murl + company.logoImg" target="_blank" v-if="company.logoImg">
-        <img :src="murl+company.logoImg" alt="" class="goodsimgthumb" style = "width:125px;height:125px;">
+        <img :src="murl+company.logoImg" class="goodsimgthumb" style = "width:125px;height:125px;">
       </a>
     </Form-item>
     <Form-item label="公司类型" prop="type">
@@ -65,7 +65,7 @@
   </div>
 </template>
 <script>
-  import uploader from '../Util/Uploader'
+  import fileLoad from '../Util/fileUploader.vue'
   export default {
     data () {
       return {
@@ -139,9 +139,9 @@
         }
       }
     },
-    components: { uploader },
+    components: { fileLoad },
     created () {
-      this.getArea(1);
+      this.getArea();
       this.getModel();
     },
     methods: {

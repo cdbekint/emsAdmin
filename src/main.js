@@ -21,8 +21,8 @@ const store = new Vuex.Store({
     token: util.getCookie('token') || '',
     qiniutoken: util.getCookie('qiniutoken') || '',
     userName: util.getCookie('userName') || '',
-    // prefix: '/api/a'
-    prefix: '/a'
+    prefix: '/api/a'
+    // prefix: '/a'
   },
   mutations: {
     updateToken (state) {
@@ -51,7 +51,6 @@ axios.interceptors.request.use(function (config) {
   if (config.method !== 'get') {
     config.data = qs.stringify(config.data)
   }
-  console.log(config)
   return config
 }, function (error) {
   return Promise.reject(error)

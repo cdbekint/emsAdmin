@@ -67,7 +67,6 @@
           showUploadList: false,
           parent: 'android',
           size: 'packgeSize',
-          name: '',
           child: 'versionUrl'
         }
       }

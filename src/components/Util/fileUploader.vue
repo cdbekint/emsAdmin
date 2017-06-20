@@ -5,7 +5,7 @@
         :show-upload-list="config.showUploadList"
         :format="config.format"
         :max-size="config.maxSize"
-        :data="{token: $store.state.qiniutoken,key:fileName}"
+        :data="{token: $store.state.qiniutoken}"
         :on-success="uploadSuccess"
         :on-progress="uploadProgress"
         :before-upload="uploadBefore"
@@ -21,20 +21,13 @@
 <script type="text/ecmascript-6">
 export default {
   name: 'Uploader',
-  props: ['config', 'name'],
+  props: ['config'],
   data () {
     return {
       item: {
         showProgress: false,
         percentage: 0
       },
-      fileName: ''
-    }
-  },
-  watch: {
-    name (val) {
-      var name = val.replace(/\./g, '_')
-      this.fileName = this.$store.state.userName + '/英雄联盟生态系统_' + name + '.apk';
     }
   },
   created () {
