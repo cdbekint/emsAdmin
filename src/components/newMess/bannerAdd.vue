@@ -10,12 +10,12 @@
     <div class="content" style = "width:70%;">
       <Form ref="formValidate" :model="datas" class="gifteditform" :rules="Rule" :label-width="100">
         <Form-item label="图片" class="text-left" >
-          <uploader :config="uploaderconfig"> </uploader>
+          <fileLoad :config="uploaderconfig"> </fileLoad>
           <input type="hidden" v-model="datas.img">
         </Form-item>
         <Form-item label="图片预览">
-          <a :href="murl + datas.logoImg" target="_blank" v-if="datas.logoImg">
-            <img :src="murl+datas.logoImg" alt="" class="goodsimgthumb" style = "width:125px;height:125px;">
+          <a :href="murl + datas.img" target="_blank" v-if="datas.img">
+            <img :src="murl+datas.img" alt="" class="goodsimgthumb" style = "width:125px;height:125px;">
           </a>
         </Form-item>
         <Form-item label="链接" prop="groupId">
@@ -37,10 +37,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import uploader from '../Util/Uploader'
+  import fileLoad from '../Util/fileUploader.vue'
   export default {
     name: 'menuGroupAdd',
-    components: { uploader },
+    components: { fileLoad },
     data () {
       return {
         datas: {
@@ -49,15 +49,16 @@
           permission: '',
           isShow: 0,
           groupId: '',
-          sort: 1
+          sort: 1,
+          img:''
         },
         groupList: [],
         uploaderconfig: {
           maxSize: 102400,
+          format: ['jpg', 'png', 'jpeg'],
           showUploadList: false,
-          parent: 'android',
-          size: 'packgeSize',
-          child: 'versionUrl'
+          parent: 'datas',
+          child: 'img'
         },
         Rule: {
           name: [
