@@ -20,12 +20,6 @@
       return {
         companyCol: [
           {
-            title: '序号',
-            type: 'index',
-            width: 60,
-            align: 'center'
-          },
-          {
             title: '版本名称',
             key: 'versionName'
           },
@@ -39,7 +33,10 @@
           },
           {
             title: '发布时间',
-            key: 'versionTime'
+            key: 'versionTime',
+            render (row) {
+              return '<span>{{new Date(row.versionTime)}}</span>'
+            }
           },
           {
             title: '应用包大小',

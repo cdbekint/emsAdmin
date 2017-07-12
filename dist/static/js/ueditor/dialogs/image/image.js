@@ -351,7 +351,7 @@
                 uploader,
                 actionUrl = editor.getActionUrl(editor.getOpt('imageActionName')),
                 acceptExtensions = (editor.getOpt('imageAllowFiles') || []).join('').replace(/\./g, ',').replace(/^[,]/, ''),
-                imageMaxSize = editor.getOpt('imageMaxSize'),
+                imageMaxSize = editor.getOpt('imageMaxSize') || 10,
                 imageCompressBorder = editor.getOpt('imageCompressBorder');
 
             if (!WebUploader.Uploader.support()) {

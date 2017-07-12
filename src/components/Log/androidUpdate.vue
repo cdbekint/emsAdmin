@@ -18,7 +18,9 @@
           <Input v-model="android.versionName" placeholder="请输入"></Input>
         </Form-item>
         <Form-item label="版本描述" prop="versionDesc">
-          <Input v-model="android.versionDesc" type="textarea" :autosize="{minRows: 3,maxRows: 10}" placeholder="请输入"></Input>
+
+          <Input type="textarea" :rows="4" v-model="android.versionDesc" placeholder="请输入"></Input>
+
         </Form-item>
 
         <Form-item label="下载包" class="text-left" >
@@ -69,7 +71,6 @@
         uploaderconfig: {
 
           maxSize: 5120,
-          format: ['jpg', 'apk'],
           showUploadList: false,
           parent: 'android',
           size: 'packgeSize',

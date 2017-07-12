@@ -20,12 +20,6 @@
       return {
         companyCol: [
           {
-            title: '序号',
-            type: 'index',
-            width: 60,
-            align: 'center'
-          },
-          {
             title: '用户',
             key: 'phoneNum'
           },
@@ -47,7 +41,8 @@
           },
           {
             title: '错误日志',
-            key: 'errorInfo'
+            key: 'errorInfo',
+            width: '60%'
           }
         ],
         companyData: [],
