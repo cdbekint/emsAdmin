@@ -22,7 +22,7 @@ const store = new Vuex.Store({
     qiniutoken: util.getCookie('qiniutoken') || '',
     userName: util.getCookie('userName') || '',
     // prefix: '/api/a'
-    prefix: '/a'
+    prefix: 'https://ems.cdbeki.com/a'
   },
   mutations: {
     updateToken (state) {
